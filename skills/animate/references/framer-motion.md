@@ -1,23 +1,23 @@
-# Framer Motion Reference
+# Framer Motion 레퍼런스
 
-Framer Motion is the recommended animation library for React/Next.js applications.
+Framer Motion은 React/Next.js 애플리케이션에 권장하는 애니메이션 라이브러리다.
 
-## Installation
+## 설치
 
 ```bash
 npm install framer-motion
-# or
+# 또는
 pnpm add framer-motion
 ```
 
-## Basic Usage
+## 기본 사용법
 
-### Motion Components
+### Motion 컴포넌트
 
 ```tsx
 import { motion } from "framer-motion"
 
-// Any HTML element can become animated
+// 모든 HTML 요소를 애니메이션 가능하게 변환
 <motion.div
   initial={{ opacity: 0, y: 20 }}
   animate={{ opacity: 1, y: 0 }}
@@ -27,22 +27,22 @@ import { motion } from "framer-motion"
 </motion.div>
 ```
 
-### Common Props
+### 주요 Props
 
-| Prop | Description |
-|------|-------------|
-| `initial` | Starting state (or `false` to disable) |
-| `animate` | Target state |
-| `exit` | Exit state (requires AnimatePresence) |
-| `transition` | Animation configuration |
-| `whileHover` | State while hovered |
-| `whileTap` | State while pressed |
-| `whileFocus` | State while focused |
-| `whileInView` | State while in viewport |
+| Prop | 설명 |
+|------|------|
+| `initial` | 시작 상태 (`false`로 비활성화 가능) |
+| `animate` | 목표 상태 |
+| `exit` | 퇴장 상태 (AnimatePresence 필요) |
+| `transition` | 애니메이션 설정 |
+| `whileHover` | 호버 중인 상태 |
+| `whileTap` | 누르는 중인 상태 |
+| `whileFocus` | 포커스 중인 상태 |
+| `whileInView` | 뷰포트 안에 있는 상태 |
 
 ## AnimatePresence
 
-Required for exit animations. Wraps elements that may be removed from DOM.
+퇴장 애니메이션에 필요하다. DOM에서 제거될 수 있는 요소를 감싼다.
 
 ```tsx
 import { motion, AnimatePresence } from "framer-motion"
@@ -70,18 +70,18 @@ function Modal({ isOpen, onClose, children }) {
 ```tsx
 <AnimatePresence
   mode="wait"      // 'sync' | 'wait' | 'popLayout'
-  initial={false}  // Disable initial animation on mount
-  onExitComplete={() => {}}  // Callback when all exits complete
+  initial={false}  // 마운트 시 초기 애니메이션 비활성화
+  onExitComplete={() => {}}  // 모든 퇴장 완료 후 콜백
 >
 ```
 
-- `mode="sync"` (default): Enter and exit happen simultaneously
-- `mode="wait"`: Wait for exit to complete before enter
-- `mode="popLayout"`: Remove exiting elements from layout flow
+- `mode="sync"` (기본값): 진입과 퇴장이 동시에 발생
+- `mode="wait"`: 퇴장이 완료된 후 진입 시작
+- `mode="popLayout"`: 퇴장하는 요소를 레이아웃 흐름에서 제거
 
 ## Variants
 
-Variants define animation states that can be orchestrated across parent/children.
+Variants는 부모와 자식 간에 조율 가능한 애니메이션 상태를 정의한다.
 
 ```tsx
 const containerVariants = {
@@ -89,8 +89,8 @@ const containerVariants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1,  // Delay between each child
-      delayChildren: 0.2,    // Initial delay before children start
+      staggerChildren: 0.1,  // 각 자식 사이의 지연
+      delayChildren: 0.2,    // 자식 시작 전 초기 지연
     }
   }
 }
@@ -117,25 +117,25 @@ function List({ items }) {
 }
 ```
 
-## Layout Animations
+## 레이아웃 애니메이션
 
-Animate layout changes automatically with the `layout` prop.
+`layout` prop으로 레이아웃 변화를 자동으로 애니메이션한다.
 
 ```tsx
-// Element animates when its position/size changes
+// 위치나 크기가 변할 때 자동으로 애니메이션
 <motion.div layout>
-  {isExpanded ? "Expanded content here" : "Collapsed"}
+  {isExpanded ? "확장된 콘텐츠" : "축소됨"}
 </motion.div>
 
-// Layout types
-<motion.div layout>  // Animate position and size
-<motion.div layout="position">  // Only animate position
-<motion.div layout="size">  // Only animate size
+// 레이아웃 타입
+<motion.div layout>  // 위치와 크기 모두 애니메이션
+<motion.div layout="position">  // 위치만 애니메이션
+<motion.div layout="size">  // 크기만 애니메이션
 ```
 
-### Shared Layout Animations (layoutId)
+### 공유 레이아웃 애니메이션 (layoutId)
 
-Elements with the same `layoutId` animate between each other.
+같은 `layoutId`를 가진 요소들이 서로 간에 애니메이션된다.
 
 ```tsx
 function Tabs({ tabs, activeTab, setActiveTab }) {
@@ -164,48 +164,48 @@ function Tabs({ tabs, activeTab, setActiveTab }) {
 
 ### LayoutGroup
 
-Group layout animations to prevent conflicts between independent animations.
+독립적인 애니메이션 간의 충돌을 방지하기 위해 레이아웃 애니메이션을 그룹화한다.
 
 ```tsx
 import { LayoutGroup } from "framer-motion"
 
 <LayoutGroup>
-  <Tabs />  {/* These layout animations */}
+  <Tabs />  {/* 이 레이아웃 애니메이션과 */}
 </LayoutGroup>
 <LayoutGroup>
-  <OtherTabs />  {/* Won't conflict with these */}
+  <OtherTabs />  {/* 이것이 충돌하지 않음 */}
 </LayoutGroup>
 ```
 
-## Gestures
+## 제스처
 
-### Drag
+### 드래그
 
 ```tsx
 <motion.div
-  drag              // Enable both axes
-  drag="x"          // Horizontal only
-  drag="y"          // Vertical only
+  drag              // 양축 모두 활성화
+  drag="x"          // 가로 방향만
+  drag="y"          // 세로 방향만
   dragConstraints={{ left: 0, right: 300, top: 0, bottom: 200 }}
-  dragElastic={0.2}     // Elasticity outside constraints (0-1)
-  dragMomentum={true}   // Continue after release
+  dragElastic={0.2}     // 제약 범위 밖 탄성 (0-1)
+  dragMomentum={true}   // 놓은 후 관성 유지
   dragTransition={{ bounceStiffness: 600, bounceDamping: 20 }}
   onDragStart={(event, info) => {}}
   onDrag={(event, info) => {}}
   onDragEnd={(event, info) => {}}
 >
-  Drag me
+  드래그하세요
 </motion.div>
 ```
 
-### Drag Info Object
+### 드래그 Info 객체
 
 ```tsx
 onDrag={(event, info) => {
-  info.point    // { x, y } current position
-  info.delta    // { x, y } change since last frame
-  info.offset   // { x, y } offset from drag start
-  info.velocity // { x, y } current velocity
+  info.point    // { x, y } 현재 위치
+  info.delta    // { x, y } 이전 프레임 대비 변화량
+  info.offset   // { x, y } 드래그 시작점으로부터의 이동량
+  info.velocity // { x, y } 현재 속도
 }}
 ```
 
@@ -213,7 +213,7 @@ onDrag={(event, info) => {
 
 ### useMotionValue
 
-Create a value that updates without re-rendering.
+리렌더링 없이 업데이트되는 값을 만든다.
 
 ```tsx
 import { motion, useMotionValue, useTransform } from "framer-motion"
@@ -221,10 +221,10 @@ import { motion, useMotionValue, useTransform } from "framer-motion"
 function Component() {
   const x = useMotionValue(0)
 
-  // Transform x position to opacity
+  // x 위치를 opacity로 변환
   const opacity = useTransform(x, [-100, 0, 100], [0, 1, 0])
 
-  // Transform x to rotation
+  // x를 회전으로 변환
   const rotate = useTransform(x, [-100, 100], [-10, 10])
 
   return (
@@ -238,7 +238,7 @@ function Component() {
 
 ### useSpring
 
-Create a spring-animated motion value.
+Spring 애니메이션이 적용된 motion value를 만든다.
 
 ```tsx
 import { useSpring, useMotionValue } from "framer-motion"
@@ -258,7 +258,7 @@ function Component() {
 
 ### useScroll
 
-Track scroll progress.
+스크롤 진행도를 추적한다.
 
 ```tsx
 import { useScroll, useTransform, motion } from "framer-motion"
@@ -274,16 +274,16 @@ function ProgressBar() {
   )
 }
 
-// Scroll within a container
+// 특정 컨테이너 내 스크롤
 const { scrollYProgress } = useScroll({
   target: containerRef,
-  offset: ["start end", "end start"]  // When to start/end tracking
+  offset: ["start end", "end start"]  // 추적 시작/종료 시점
 })
 ```
 
 ### useInView
 
-Detect when element enters viewport.
+요소가 뷰포트에 진입하는 것을 감지한다.
 
 ```tsx
 import { useInView } from "framer-motion"
@@ -291,8 +291,8 @@ import { useInView } from "framer-motion"
 function Component() {
   const ref = useRef(null)
   const isInView = useInView(ref, {
-    once: true,      // Only trigger once
-    margin: "-100px" // Trigger 100px before entering
+    once: true,      // 한 번만 트리거
+    margin: "-100px" // 뷰포트 진입 100px 전에 트리거
   })
 
   return (
@@ -305,51 +305,51 @@ function Component() {
 }
 ```
 
-## Transition Options
+## Transition 옵션
 
 ```tsx
 const transition = {
-  // Timing
+  // 타이밍
   duration: 0.3,
   delay: 0.1,
 
   // Easing
-  ease: "easeOut",  // or array: [0.23, 1, 0.32, 1]
+  ease: "easeOut",  // 또는 배열: [0.23, 1, 0.32, 1]
 
-  // Spring physics
+  // Spring 물리
   type: "spring",
   stiffness: 400,
   damping: 30,
   mass: 1,
 
-  // Or duration-based spring
+  // 또는 duration 기반 spring
   type: "spring",
   duration: 0.3,
   bounce: 0.2,
 
-  // Per-property transitions
+  // 속성별 개별 transition
   opacity: { duration: 0.2 },
   x: { type: "spring", stiffness: 300 },
 
-  // Repeat
+  // 반복
   repeat: Infinity,
   repeatType: "reverse",  // "loop" | "reverse" | "mirror"
   repeatDelay: 0.5,
 }
 ```
 
-## Multi-Step Animations (Keyframes)
+## 다단계 애니메이션 (Keyframes)
 
 ```tsx
 <motion.div
   animate={{
-    x: [0, 100, 0],           // Move right then back
-    opacity: [0, 1, 1, 0],    // Fade in, stay, fade out
-    scale: [1, 1.2, 1],       // Grow then shrink
+    x: [0, 100, 0],           // 오른쪽으로 이동 후 복귀
+    opacity: [0, 1, 1, 0],    // 페이드 인 → 유지 → 페이드 아웃
+    scale: [1, 1.2, 1],       // 커졌다가 축소
   }}
   transition={{
     duration: 2,
-    times: [0, 0.5, 1],       // When each keyframe occurs (0-1)
+    times: [0, 0.5, 1],       // 각 keyframe 발생 시점 (0-1)
     ease: "easeInOut",
   }}
 />

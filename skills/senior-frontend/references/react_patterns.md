@@ -1,103 +1,103 @@
-# React Patterns
+# React 패턴
 
-## Overview
+## 개요
 
-This reference guide provides comprehensive information for senior frontend.
+이 참조 가이드는 시니어 프론트엔드를 위한 종합 정보를 제공한다.
 
-## Patterns and Practices
+## 패턴 및 사례
 
-### Pattern 1: Best Practice Implementation
+### 패턴 1: 모범 사례 구현
 
-**Description:**
-Detailed explanation of the pattern.
+**설명:**
+패턴에 대한 상세 설명.
 
-**When to Use:**
-- Scenario 1
-- Scenario 2
-- Scenario 3
+**사용 시점:**
+- 시나리오 1
+- 시나리오 2
+- 시나리오 3
 
-**Implementation:**
+**구현:**
 ```typescript
-// Example code implementation
+// 예제 코드 구현
 export class Example {
   // Implementation details
 }
 ```
 
-**Benefits:**
-- Benefit 1
-- Benefit 2
-- Benefit 3
+**장점:**
+- 장점 1
+- 장점 2
+- 장점 3
 
-**Trade-offs:**
-- Consider 1
-- Consider 2
-- Consider 3
+**트레이드오프:**
+- 고려사항 1
+- 고려사항 2
+- 고려사항 3
 
-### Pattern 2: Advanced Technique
+### 패턴 2: 고급 기법
 
-**Description:**
-Another important pattern for senior frontend.
+**설명:**
+시니어 프론트엔드를 위한 또 다른 중요한 패턴.
 
-**Implementation:**
+**구현:**
 ```typescript
-// Advanced example
+// 고급 예제
 async function advancedExample() {
   // Code here
 }
 ```
 
-## Guidelines
+## 가이드라인
 
-### Code Organization
-- Clear structure
-- Logical separation
-- Consistent naming
-- Proper documentation
+### 코드 구성
+- 명확한 구조
+- 논리적 분리
+- 일관된 네이밍
+- 적절한 문서화
 
-### Performance Considerations
-- Optimization strategies
-- Bottleneck identification
-- Monitoring approaches
-- Scaling techniques
+### 성능 고려사항
+- 최적화 전략
+- 병목 지점 식별
+- 모니터링 방법
+- 확장 기법
 
-### Security Best Practices
-- Input validation
-- Authentication
-- Authorization
-- Data protection
+### 보안 모범 사례
+- 입력값 검증
+- 인증
+- 권한 부여
+- 데이터 보호
 
-## Common Patterns
+## 자주 쓰는 패턴
 
-### Pattern A
-Implementation details and examples.
+### 패턴 A
+구현 상세 및 예제.
 
-### Pattern B
-Implementation details and examples.
+### 패턴 B
+구현 상세 및 예제.
 
-### Pattern C
-Implementation details and examples.
+### 패턴 C
+구현 상세 및 예제.
 
-## Anti-Patterns to Avoid
+## 피해야 할 안티패턴
 
-### Anti-Pattern 1
-What not to do and why.
+### 안티패턴 1
+하지 말아야 할 것과 그 이유.
 
-### Anti-Pattern 2
-What not to do and why.
+### 안티패턴 2
+하지 말아야 할 것과 그 이유.
 
-## Tools and Resources
+## 도구 및 리소스
 
-### Recommended Tools
-- Tool 1: Purpose
-- Tool 2: Purpose
-- Tool 3: Purpose
+### 추천 도구
+- 도구 1: 용도
+- 도구 2: 용도
+- 도구 3: 용도
 
-### Further Reading
-- Resource 1
-- Resource 2
-- Resource 3
+### 추가 자료
+- 자료 1
+- 자료 2
+- 자료 3
 
-## Conclusion
+## 마무리
 
-Key takeaways for using this reference guide effectively.
+이 참조 가이드를 효과적으로 활용하기 위한 핵심 내용.

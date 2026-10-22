@@ -1,23 +1,23 @@
-# Performance & Accessibility Reference
+# 성능 & 접근성 레퍼런스
 
-## Performance
+## 성능
 
-### Target: 60 FPS
+### 목표: 60 FPS
 
-Animations should run at 60 frames per second (16.67ms per frame) for smooth motion.
+애니메이션은 초당 60프레임(프레임당 16.67ms)으로 부드럽게 동작해야 한다.
 
-### GPU-Accelerated Properties
+### GPU 가속 속성
 
-Only these properties are hardware-accelerated and won't cause layout recalculation:
+하드웨어 가속이 적용되어 레이아웃 재계산을 일으키지 않는 속성:
 
-| Property | Notes |
-|----------|-------|
+| 속성 | 비고 |
+|------|------|
 | `transform` | translate, scale, rotate |
-| `opacity` | Fade effects |
+| `opacity` | 페이드 효과 |
 
-### Properties to Avoid Animating
+### 애니메이션을 피해야 할 속성
 
-These trigger layout recalculation and are expensive:
+레이아웃 재계산을 유발하여 비용이 크다:
 
 - `width`, `height`
 - `top`, `left`, `right`, `bottom`
@@ -25,11 +25,11 @@ These trigger layout recalculation and are expensive:
 - `border-width`
 - `font-size`
 
-**Instead**: Use `transform: scale()` instead of width/height, `transform: translate()` instead of top/left.
+**대안**: width/height 대신 `transform: scale()`, top/left 대신 `transform: translate()`를 사용한다.
 
 ### will-change
 
-Hints to the browser that an element will animate:
+브라우저에게 요소가 애니메이션될 것임을 미리 알려준다:
 
 ```css
 .will-animate {
@@ -37,60 +37,60 @@ Hints to the browser that an element will animate:
 }
 ```
 
-**Caution**: Use sparingly. Apply only to elements that actually animate, and remove after animation completes if possible. Overuse can hurt performance.
+**주의**: 아껴서 사용한다. 실제로 애니메이션되는 요소에만 적용하고, 가능하면 애니메이션 완료 후 제거한다. 남용하면 오히려 성능이 저하된다.
 
-### Hardware Acceleration Hack
+### GPU 강제 활성화
 
-Force GPU layer creation (use sparingly):
+GPU 레이어를 강제로 생성한다 (아껴서 사용):
 
 ```css
 .force-gpu {
   transform: translateZ(0);
-  /* or */
+  /* 또는 */
   backface-visibility: hidden;
 }
 ```
 
-### Monitoring Performance
+### 성능 모니터링
 
-1. **Chrome DevTools**: Performance tab → Record during animation
-2. **Rendering tab**: Enable "FPS meter" and "Paint flashing"
-3. **Layers panel**: Check layer composition
+1. **Chrome DevTools**: Performance 탭 → 애니메이션 중 녹화
+2. **Rendering 탭**: "FPS meter"와 "Paint flashing" 활성화
+3. **Layers 패널**: 레이어 합성 확인
 
-### Common Performance Issues
+### 자주 발생하는 성능 문제
 
-| Issue | Solution |
-|-------|----------|
-| Janky scrolling | Use `transform` instead of `top/left` |
-| Slow animations | Reduce number of animated elements |
-| Memory spikes | Avoid creating new objects during animation |
-| Layout thrashing | Batch DOM reads/writes |
+| 문제 | 해결책 |
+|------|--------|
+| 끊기는 스크롤 | `top/left` 대신 `transform` 사용 |
+| 느린 애니메이션 | 애니메이션되는 요소 수 줄이기 |
+| 메모리 급증 | 애니메이션 중 새 객체 생성 피하기 |
+| 레이아웃 스래싱 | DOM 읽기/쓰기 일괄 처리 |
 
-## Accessibility
+## 접근성
 
 ### prefers-reduced-motion
 
-Users can indicate they prefer reduced motion in their system settings. Always respect this preference.
+사용자는 시스템 설정에서 줄어든 동작을 선호한다고 표시할 수 있다. 이 설정을 항상 존중한다.
 
-#### CSS Implementation
+#### CSS 구현
 
 ```css
-/* Full animation by default */
+/* 기본: 전체 애니메이션 */
 .element {
   transition: transform 300ms ease-out;
 }
 
-/* Reduced or no motion for users who prefer it */
+/* 동작 감소를 선호하는 사용자에게는 줄이거나 제거 */
 @media (prefers-reduced-motion: reduce) {
   .element {
     transition: none;
-    /* or minimal transition */
+    /* 또는 최소한의 transition */
     transition: opacity 200ms ease-out;
   }
 }
 ```
 
-#### React/Framer Motion Implementation
+#### React / Framer Motion 구현
 
 ```tsx
 import { useReducedMotion } from "framer-motion"
@@ -108,7 +108,7 @@ function AnimatedComponent() {
 }
 ```
 
-#### Global Configuration with MotionConfig
+#### MotionConfig로 전역 설정
 
 ```tsx
 import { MotionConfig, useReducedMotion } from "framer-motion"
@@ -118,40 +118,40 @@ function App() {
 
   return (
     <MotionConfig reducedMotion={shouldReduceMotion ? "always" : "never"}>
-      {/* All motion components inside respect this setting */}
+      {/* 내부의 모든 motion 컴포넌트가 이 설정을 따름 */}
       <YourApp />
     </MotionConfig>
   )
 }
 ```
 
-### MotionConfig Options
+### MotionConfig 옵션
 
-| Value | Effect |
-|-------|--------|
-| `"never"` | Normal animations (default) |
-| `"always"` | Skip all animations |
-| `"user"` | Respect system `prefers-reduced-motion` setting |
+| 값 | 효과 |
+|----|------|
+| `"never"` | 일반 애니메이션 (기본값) |
+| `"always"` | 모든 애니메이션 건너뜀 |
+| `"user"` | 시스템의 `prefers-reduced-motion` 설정 따름 |
 
-### Accessible Animation Guidelines
+### 접근성 있는 애니메이션 가이드라인
 
-1. **Provide alternatives**: Ensure content is accessible without animation
-2. **Avoid flashing**: No content flashing more than 3 times per second
-3. **Don't block interaction**: Animations shouldn't prevent users from interacting
-4. **Keep it brief**: Long animations can be frustrating
-5. **Purposeful motion**: Only animate when it adds value
-6. **Pause controls**: For continuous animations, provide pause/stop
+1. **대체 수단 제공**: 애니메이션 없이도 콘텐츠에 접근할 수 있어야 함
+2. **깜박임 금지**: 초당 3회 이상 깜박이는 콘텐츠 금지
+3. **인터랙션 차단 금지**: 애니메이션이 사용자 조작을 막아선 안 됨
+4. **짧게 유지**: 긴 애니메이션은 불편함을 준다
+5. **목적 있는 동작**: 가치를 더할 때만 애니메이션한다
+6. **일시정지 컨트롤**: 지속적인 애니메이션에는 정지/일시정지 기능 제공
 
-### Focus Management with Animations
+### 애니메이션 중 포커스 관리
 
 ```tsx
-// Ensure focus moves appropriately with animated elements
+// 애니메이션된 요소와 함께 포커스가 적절히 이동해야 함
 function Modal({ isOpen }) {
   const modalRef = useRef(null)
 
   useEffect(() => {
     if (isOpen) {
-      // Wait for enter animation before focusing
+      // 진입 애니메이션 완료 후 포커스 이동
       const timer = setTimeout(() => {
         modalRef.current?.focus()
       }, 300)
@@ -169,7 +169,7 @@ function Modal({ isOpen }) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
-          Modal content
+          모달 콘텐츠
         </motion.div>
       )}
     </AnimatePresence>
@@ -177,9 +177,9 @@ function Modal({ isOpen }) {
 }
 ```
 
-### Testing Reduced Motion
+### 동작 감소 테스트 방법
 
-1. **macOS**: System Preferences → Accessibility → Display → Reduce motion
-2. **Windows**: Settings → Ease of Access → Display → Show animations
-3. **iOS**: Settings → Accessibility → Motion → Reduce Motion
-4. **Chrome DevTools**: Rendering tab → Emulate CSS media feature `prefers-reduced-motion`
+1. **macOS**: 시스템 환경설정 → 손쉬운 사용 → 디스플레이 → 동작 줄이기
+2. **Windows**: 설정 → 접근성 → 디스플레이 → 애니메이션 표시
+3. **iOS**: 설정 → 손쉬운 사용 → 동작 → 동작 줄이기
+4. **Chrome DevTools**: Rendering 탭 → CSS 미디어 기능 에뮬레이션 → `prefers-reduced-motion`

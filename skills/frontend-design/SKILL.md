@@ -1,55 +1,121 @@
 ---
 name: frontend-design
-description: Guidance for distinctive, intentional visual design when building new UI or reshaping an existing one. Helps with aesthetic direction, typography, and making choices that don't read as templated defaults.
-license: Complete terms in LICENSE.txt
+description: 랜딩·포트폴리오·리디자인에서 차별화된 시각 디자인을 만드는 스킬. 브리프를 읽어 방향을 잡고, AI 기본값을 피하며, 의도적인 디자인을 구현한다.
 ---
 
 # Frontend Design
 
-Approach this as the design lead at a small studio known for giving every client a visual identity that could not be mistaken for anyone else's. This client has already rejected proposals that felt templated, and is paying for a distinctive point of view: make deliberate, opinionated choices about palette, typography, and layout that are specific to this brief, and take one real aesthetic risk you can justify.
+> 랜딩 페이지, 포트폴리오, 리디자인 전용. 대시보드·데이터 테이블·다단계 제품 UI에는 해당하지 않는다.
+> 아래 모든 규칙은 **맥락에 따라** 적용한다. 코드 전에 반드시 브리프를 먼저 읽고, 필요한 것만 꺼낸다.
 
-## Ground it in the subject
+---
 
-If the brief does not pin down what the product or subject is, pin it yourself before designing: name one concrete subject, its audience, and the page's single job, and state your choice. If there's any information in your memory about the human's preferences, context about what they're building, or designs you've made before – use that as a hint. The subject's own world, its materials, instruments, artifacts, and vernacular, is where distinctive choices come from. Build with the brief's real content and subject matter throughout.
+## 0. 브리프 읽기 (코드 전에 반드시)
 
-## Design principles
+코드를 건드리기 전, **사용자가 실제로 원하는 것을 추론한다**. LLM 디자인 결과물이 나쁜 이유는 대부분 브리프를 읽지 않고 기본 미학으로 뛰어들기 때문이다.
 
-For web designs, the hero is a thesis. Open with the most characteristic thing in the subject's world, in whatever form makes sense for it: a headline, an image, an animation, a live demo, an interactive moment. Be deliberate with your choice: a big number with a small label, supporting stats, and a gradient accent is the template answer, only use if that's truly the best option.
+### 0.A 먼저 읽어야 할 신호 6가지
 
-Typography carries the personality of the page. Pair the display and body faces deliberately, not the same families you would reach for on any other project, and set a clear type scale with intentional weights, widths, and spacing. Make the type treatment itself a memorable part of the design, not a neutral delivery vehicle for the content.
+1. **페이지 종류** - 랜딩(SaaS / 소비자 / 에이전시 / 이벤트), 포트폴리오(개발자 / 디자이너 / 크리에이티브 스튜디오), 리디자인(보존 vs 개편), 에디토리얼 / 블로그
+2. **분위기 단어** - 사용자가 쓴 표현: "미니멀", "차분한", "Linear 스타일", "Awwwards", "브루탈리즘", "프리미엄 소비자", "Apple 느낌", "유쾌한", "진지한 B2B", "에디토리얼", "에이전시 느낌", "글래시", "다크 테크"
+3. **레퍼런스 신호** - 연결한 URL, 붙여넣은 스크린샷, 언급한 제품, 경쟁하는 브랜드
+4. **오디언스** - B2B 구매 담당자 vs 디자인에 민감한 소비자 vs 포트폴리오를 훑는 채용 담당자. 미학을 결정하는 건 취향이 아니라 오디언스다.
+5. **기존 브랜드 자산** - 로고, 색상, 서체, 사진. 리디자인에서는 선택 사항이 아닌 출발 재료다.
+6. **숨겨진 제약** - 접근성 우선 오디언스, 공공기관, 규제 산업, 신뢰 우선 커머스, 어린이 제품. 이 제약들은 미적 선호보다 **우선한다**.
 
-Structure is information. Structural devices, numbering, eyebrows, dividers, labels, should encode something true about the content, not decorate it. Many generic designs use numbered markers (01 / 02 / 03), but that's only appropriate if the content actually is a sequence - like a real process or a typed timeline where order carries information the reader needs. Question if choices like numbered markers actually make sense before incorporating them.
+### 0.B 코드 전, 한 줄 "Design Read" 선언
 
-Leverage motion deliberately. Think about where and if animation can serve the subject: a page-load sequence, a scroll-triggered reveal, hover micro-interactions, ambient atmosphere. An orchestrated moment usually lands harder than scattered effects; choose what the direction calls for. However, sometimes less is more, and extra animation contributes to the feeling that the design is AI-generated.
+코드 작성 전에 반드시 한 줄로 선언한다: **"이 브리프를 \<페이지 종류> for \<오디언스>, \<분위기> 언어, \<디자인 시스템 또는 미학 계열> 방향으로 읽는다."**
 
-Match complexity to the vision. Maximalist directions need elaborate execution; minimal directions need precision in spacing, type, and detail. Elegance is executing the chosen vision well.
+예시:
+- *"이 브리프를 기술 구매자 대상 B2B SaaS 랜딩, Linear 스타일 미니멀 언어, Tailwind utilities + Geist + 절제된 모션 방향으로 읽는다."*
+- *"이 브리프를 채용 담당자 대상 솔로 개발자 포트폴리오, 에디토리얼 / 키네틱 타이포 언어, 네이티브 CSS + 스크롤 애니메이션 + 커스텀 타이포그래피 방향으로 읽는다."*
 
-Consider written content carefully. Often a design brief may not contain real content, and it's up to you to come up with copy. Copy can make a design feel as templated as the design itself. See the below section on writing for more guidance.
+### 0.C 애매하면 질문 하나만
 
-## Process: brainstorm, explore, plan, critique, build, critique again
+정확히 **하나**의 명확화 질문만 한다. 여러 개 질문을 쏟아내지 않는다. 예: *"Linear 클린 느낌에 가깝게 갈까요, Awwwards 실험적 느낌에 가깝게 갈까요?"*
 
-For calibration: AI-generated design right now clusters around three looks: (1) a warm cream background (near #F4F1EA) with a high-contrast serif display and a terracotta accent; (2) a near-black background with a single bright acid-green or vermilion accent; (3) a broadsheet-style layout with hairline rules, zero border-radius, and dense newspaper-like columns. All three are legitimate for some briefs, but they are defaults rather than choices, and they appear regardless of subject. Where the brief pins down a visual direction, follow it exactly — the brief's own words always win, including when it asks for one of these looks. Where it leaves an axis free, don't spend that freedom on one of these defaults. Just like a human designer who's hired, there's often a careful balance between doing what you're good at and taking each project as a chance to experiment and learn.
+문맥에서 자신 있게 추론할 수 있으면 **묻지 않는다**. Design Read를 선언하고 바로 진행한다.
 
-Work in two passes. First, brainstorm a short design plan based on the human's design brief: create a compact token system with color, type, layout, and signature. Color: describe the palette as 4–6 named hex values. Type: the typefaces for 2+ roles (a characterful display face that's used with restraint, a complementary body face, and a utility face for captions or data if needed). Layout: a layout concept, using one-sentence prose descriptions and ASCII wireframes to ideate and compare. Signature: the single unique element this page will be remembered by that embodies the brief in an appropriate way.
+### 0.D Anti-Default 규율
 
-Then review that plan against the brief before building: if any part of it reads like the generic default you would produce for any similar page (work through a similar prompt to see if you arrive somewhere similar) rather than a choice made for this specific brief — revise that part, say what you changed and why. Only after you've confirmed the relative uniqueness of your design plan should you start to write the code, following the revised plan exactly and deriving every color and type decision from it.
+다음을 기본값으로 쓰지 않는다: AI-퍼플 그라데이션, 다크 메시 위 중앙 정렬 히어로, 3열 동일 feature 카드, 모든 곳에 glassmorphism, 끝없는 마이크로 애니메이션, Inter + slate-900. 이것들은 LLM 기본값이다. Design Read를 바탕으로 의도적으로 벗어난다.
 
-When writing the code, be careful of structuring your CSS selector specificities. It's easy to generate CSS classes that cancel each other out (especially with a type-based selector like .section and a element-based selector like .cta). This can happen often with paddings/margins between sections.
+---
 
-Try to do a lot of this planning and iteration in your thinking, and only show ideas to the user when you have higher confidence it'll delight them.
+## 1. 다이얼 설정
 
-## Restraint and self-critique
+Design Read 이후, 다이얼 세 개를 설정한다. 이후 모든 레이아웃·모션·밀도 결정은 이 값을 기준으로 한다.
 
-Spend your boldness in one place. Let the signature element be the one memorable thing, keep everything around it quiet and disciplined, and cut any decoration that does not serve the brief. Not taking a risk can be a risk itself! Build to a quality floor without announcing it: responsive down to mobile, visible keyboard focus, reduced motion respected. Critique your own work as you build, taking screenshots if your environment supports it – a picture is worth 1000 tokens. Consider Chanel's advice: before leaving the house, take a look in the mirror and remove one accessory. Human creators have memory and always try to do something new, so if you have a space to quickly jot down notes about what you've tried, it can help you in future passes.
+- **`DESIGN_VARIANCE: 8`** - 1 = 완전한 대칭, 10 = 아티스틱 카오스
+- **`MOTION_INTENSITY: 6`** - 1 = 정적, 10 = 시네마틱 / 물리 기반
+- **`VISUAL_DENSITY: 4`** - 1 = 갤러리 / 여백 충분, 10 = 콕핏 / 정보 밀집
 
-## More on writing in design
+**기본값: 8 / 6 / 4.** Design Read가 다른 방향을 가리키지 않으면 이 값을 쓴다. 사용자에게 파일을 편집하게 하지 않는다. 대화 중에 덮어쓴다.
 
-Words appear in a design for one reason: to make it easier to understand, and therefore easier to use. They are design material, not decoration. Bring the same intentionality to copy that you would bring to spacing and color. Before writing anything, ask what the design needs to say, and how it can best be said to help the person navigate the experience.
+| 브리프 신호 | VARIANCE | MOTION | DENSITY |
+|---|---|---|---|
+| "미니멀 / 차분한 / 에디토리얼 / Linear 스타일" | 5-6 | 3-4 | 2-3 |
+| "프리미엄 소비자 / Apple 느낌 / 럭셔리" | 7-8 | 5-7 | 3-4 |
+| "유쾌한 / Awwwards / 실험적 / 에이전시" | 9-10 | 8-10 | 3-4 |
+| "랜딩 / 포트폴리오 / 마케팅 사이트 (기본)" | 7-9 | 6-8 | 3-5 |
+| "신뢰 우선 / 접근성 중요" | 3-4 | 2-3 | 4-5 |
 
-Write from the end user's side of the screen. Name things by what people control and recognize, never by how the system is built. A person manages notifications, not webhook config. Describe what something does in plain terms rather than selling it. Being specific is always better than being clever.
+---
 
-Use active voice as default. A control should say exactly what happens when it's used: "Save changes," not "Submit." An action keeps the same name through the whole flow, so the button that says "Publish" produces a toast that says "Published." The vocabulary of an interface is the signposting for someone navigating the product. Cohesion and consistency are how people learn their way around.
+## 2. 디자인 원칙
 
-Treat failure and emptiness as moments for direction, not mood. Explain what went wrong and how to fix it, in the interface's voice rather than a person's. Errors don't apologize, and they are never vague about what happened. An empty screen is an invitation to act.
+이 스킬을 사용할 때는, 모든 클라이언트에게 다른 누구와도 혼동할 수 없는 시각적 아이덴티티를 만들어주기로 유명한 작은 스튜디오의 디자인 리드라는 관점으로 접근한다. 이 클라이언트는 이미 템플릿처럼 느껴지는 제안을 거절했고, 차별화된 관점에 비용을 지불하고 있다. 팔레트, 타이포그래피, 레이아웃에 대해 이 브리프에 특정한 의도적이고 의견이 담긴 선택을 하고, 정당화할 수 있는 진짜 미적 모험을 한 가지 감행한다.
 
-Keep the register conversational and tuned: plain verbs, sentence case, no filler, with tone matched to the brand and the audience. Let each element do exactly one job. A label labels, an example demonstrates, and nothing quietly does double duty.
+브리프에서 제품이나 주제를 명확히 정하지 않았다면, 디자인 전에 직접 정한다. 구체적인 주제 하나, 타깃 오디언스, 페이지의 단일 목적을 명시하고 선택 이유를 밝힌다. 사람의 선호도, 만들고 있는 것의 맥락, 이전에 만든 디자인에 대한 기억 속 정보가 있다면 힌트로 활용한다. 독특한 선택은 주제 자체의 세계, 즉 그 재료, 도구, 유물, 고유한 언어에서 나온다. 브리프의 실제 내용과 주제로 전체를 구성한다.
+
+**히어로는 테제다.** 주제의 세계에서 가장 특징적인 것으로 시작한다. 헤드라인, 이미지, 애니메이션, 라이브 데모, 인터랙티브 순간 등 어떤 형태든 주제에 맞는 것으로. 선택에 의도를 담는다. 작은 레이블이 붙은 큰 숫자, 지지 통계, 그라디언트 액센트는 템플릿 답변이다. 진짜 최선의 선택일 때만 사용한다.
+
+**타이포그래피는 페이지의 개성을 담는다.** 디스플레이 서체와 본문 서체를 의도적으로 페어링한다. 다른 프로젝트에서도 집어들 법한 같은 서체 조합이 아니어야 한다. 의도적인 굵기, 너비, 간격으로 명확한 타입 스케일을 설정한다. 타입 처리 방식 자체가 디자인의 기억에 남는 일부가 되도록 한다. 콘텐츠를 중립적으로 전달하는 수단이 아니라.
+
+**구조는 정보다.** 번호 매기기, 아이브로우, 구분선, 레이블 같은 구조적 장치는 콘텐츠에 대한 진실을 담아야 한다. 장식이 아니라. 많은 범용 디자인이 번호 마커(01 / 02 / 03)를 사용하지만, 이는 콘텐츠가 실제로 순서가 있는 경우에만 적합하다. 번호 마커 같은 선택이 실제로 의미 있는지 적용 전에 검토한다.
+
+**모션을 의도적으로 활용한다.** 애니메이션이 주제를 위해 어디서, 어떻게 쓰일 수 있는지 생각한다. 페이지 로드 시퀀스, 스크롤 트리거 리빌, 호버 마이크로인터랙션, 앰비언트 분위기. 오케스트레이션된 순간은 산발적인 효과보다 강하게 전달된다. 방향성이 요구하는 것을 선택한다. 그러나 때로는 적을수록 좋고, 과도한 애니메이션은 AI가 만든 느낌을 준다.
+
+**복잡성을 비전에 맞춘다.** 맥시멀리스트 방향은 정교한 실행이 필요하고, 미니멀 방향은 간격, 타입, 디테일의 정밀도가 필요하다. 우아함은 선택한 비전을 잘 실행하는 것이다.
+
+---
+
+## 3. 프로세스: 브레인스토밍, 탐색, 계획, 비평, 빌드, 다시 비평
+
+**보정을 위한 참고:** 현재 AI 생성 디자인은 세 가지 외관으로 집중된다. (1) 고대비 세리프 디스플레이와 테라코타 액센트를 가진 따뜻한 크림 배경; (2) 밝은 애시드 그린 또는 버밀리언 단일 액센트를 가진 거의 검은 배경; (3) 헤어라인 룰, 제로 border-radius, 빽빽한 신문 스타일 컬럼의 브로드시트 레이아웃. 세 가지 모두 특정 브리프에는 적합하지만, 선택이 아닌 기본값으로 주제에 관계없이 나타난다. 브리프가 시각적 방향을 명시하면 정확히 따른다. 브리프가 자유로운 축을 남겨두면, 그 자유를 이 기본값 중 하나에 쓰지 않는다.
+
+두 번의 패스로 작업한다. 첫 번째로, 사람의 디자인 브리프를 바탕으로 짧은 디자인 계획을 브레인스토밍한다. 색상, 타입, 레이아웃, 시그니처를 포함한 간결한 토큰 시스템을 만든다.
+
+- **색상:** 팔레트를 4-6개의 이름 있는 hex 값으로 설명한다.
+- **타입:** 2개 이상의 역할을 위한 서체 (절제되어 사용되는 개성 있는 디스플레이 서체, 보완적인 본문 서체, 필요하다면 캡션이나 데이터용 유틸리티 서체).
+- **레이아웃:** 한 문장 산문 설명과 ASCII 와이어프레임으로 아이디어를 내고 비교하는 레이아웃 개념.
+- **시그니처:** 이 페이지가 기억될 단일 고유 요소로 브리프를 적절한 방식으로 구현한다.
+
+그다음 빌드 전에 브리프와 계획을 대조한다. 어떤 부분이 이 특정 브리프를 위한 선택이 아닌 일반적인 기본값처럼 읽힌다면, 그 부분을 수정하고 무엇을 바꿨고 왜 바꿨는지 설명한다. 디자인 계획의 상대적 독창성을 확인한 후에만 코드 작성을 시작하고, 수정된 계획을 정확히 따르며 모든 색상과 타입 결정을 그것에서 도출한다.
+
+코드를 작성할 때 CSS 선택자 특이성 구조에 주의한다. CSS 클래스가 서로를 상쇄하기 쉽다 (특히 `.section` 같은 타입 기반 선택자와 `.cta` 같은 요소 기반 선택자). 섹션 간 padding/margin에서 자주 발생한다.
+
+이 계획과 반복을 최대한 생각 속에서 처리하고, 확신이 생겼을 때만 사용자에게 아이디어를 보여준다.
+
+---
+
+## 4. 절제와 자기 비평
+
+담대함을 한 곳에 집중한다. 시그니처 요소가 유일하게 기억에 남는 것이 되도록 하고, 주변의 모든 것은 조용하고 절제되게 유지하며, 브리프에 기여하지 않는 장식은 잘라낸다. 모험하지 않는 것도 모험이 될 수 있다. 발표 없이 품질 기준선을 유지한다. 모바일까지 반응형, 키보드 포커스 가시화, reduced motion 존중.
+
+빌드하면서 자신의 작업을 비평하고, 환경이 지원한다면 스크린샷을 찍는다. 사진 한 장이 1000개의 토큰보다 낫다. 샤넬의 조언을 고려한다: 집을 나서기 전 거울을 보고 액세서리 하나를 제거하라. 인간 창작자는 기억이 있고 항상 새로운 것을 시도하므로, 시도한 것을 빠르게 메모할 공간이 있다면 다음 패스에 도움이 된다.
+
+---
+
+## 5. 디자인에서의 글쓰기
+
+디자인에서 글이 등장하는 이유는 하나다. 이해를 쉽게 하고, 따라서 사용을 쉽게 하기 위해서다. 글은 디자인 재료이지 장식이 아니다. 간격과 색상에 가져오는 것과 같은 의도를 카피에도 가져온다. 무언가를 쓰기 전에, 디자인이 무엇을 말해야 하는지, 경험을 탐색하는 사람을 가장 잘 돕기 위해 어떻게 말해야 하는지 묻는다.
+
+화면 너머 사용자의 관점에서 쓴다. 시스템이 어떻게 구축되었는지가 아닌, 사람들이 제어하고 인식하는 것으로 이름을 붙인다. 사람은 알림을 관리하지, webhook 설정을 관리하지 않는다. 무언가가 하는 일을 파는 것이 아니라 평이하게 설명한다. 구체적인 것이 영리한 것보다 항상 낫다.
+
+능동태를 기본으로 사용한다. 컨트롤은 사용했을 때 무슨 일이 일어나는지 정확히 말해야 한다. "저장"이지 "제출"이 아니다. 액션은 전체 흐름에서 같은 이름을 유지한다. "게시" 버튼이 "게시됨" 토스트를 만든다. 인터페이스의 어휘는 제품을 탐색하는 사람을 위한 이정표다. 일관성과 통일성이 사람들이 길을 익히는 방법이다.
+
+실패와 빈 상태를 분위기가 아닌 방향을 위한 순간으로 다룬다. 무엇이 잘못됐고 어떻게 고치는지를 인터페이스의 목소리로 설명한다. 에러는 사과하지 않고, 무슨 일이 있었는지에 대해 모호하지 않다. 빈 화면은 행동 초대다.
+
+어조는 대화체로 맞춘다. 평이한 동사, 문장 케이스, 군더더기 없이, 브랜드와 오디언스에 맞는 톤으로. 각 요소가 정확히 하나의 역할을 하도록 한다. 레이블은 레이블 역할을, 예시는 시연 역할을, 아무것도 조용히 이중 역할을 하지 않는다.

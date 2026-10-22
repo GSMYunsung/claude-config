@@ -1,27 +1,27 @@
 ---
 name: animate
-description: Animation patterns and best practices for Next.js/React applications. Use this skill when implementing animations, transitions, hover effects, page transitions, modals, or any motion in React components. Based on Emil Kowalski's "Animations on the Web" course.
+description: Next.js/React 애플리케이션을 위한 애니메이션 패턴 및 모범 사례. 애니메이션, 트랜지션, 호버 효과, 페이지 전환, 모달, React 컴포넌트의 모션 구현 시 사용.
 ---
 
-# Next.js Animations
+# Next.js 애니메이션
 
-## Overview
+## 개요
 
-This skill provides comprehensive guidance for implementing smooth, performant, and accessible animations in Next.js and React applications. It covers CSS animations, Framer Motion, easing principles, and accessibility considerations.
+Next.js와 React 애플리케이션에서 부드럽고 성능 좋은 접근성 높은 애니메이션을 구현하는 방법을 안내하는 스킬이다. CSS 애니메이션, Framer Motion, 이징 원칙, 접근성을 다룬다.
 
-## Quick Reference
+## 빠른 참고
 
-### Easing Cheat Sheet
+### 이징 치트시트
 
-| Animation Type | Easing | Duration |
+| 애니메이션 유형 | 이징 | 지속시간 |
 |----------------|--------|----------|
-| Element entering | `ease-out` | 200-300ms |
-| Element moving on screen | `ease-in-out` | 200-300ms |
-| Element exiting | `ease-in` | 150-200ms |
-| Hover effects | `ease` | 150ms |
-| Opacity only | `linear` | varies |
+| 요소 등장 | `ease-out` | 200-300ms |
+| 화면 위 요소 이동 | `ease-in-out` | 200-300ms |
+| 요소 퇴장 | `ease-in` | 150-200ms |
+| 호버 효과 | `ease` | 150ms |
+| 투명도만 변경 | `linear` | 상황에 따라 다름 |
 
-### CSS Custom Properties (Recommended)
+### CSS 커스텀 속성 (권장)
 
 ```css
 :root {
@@ -31,9 +31,9 @@ This skill provides comprehensive guidance for implementing smooth, performant, 
 }
 ```
 
-## Common Animation Patterns
+## 자주 쓰는 애니메이션 패턴
 
-### 1. Hover Lift Effect
+### 1. 호버 띄우기 효과
 
 ```css
 .card {
@@ -46,7 +46,7 @@ This skill provides comprehensive guidance for implementing smooth, performant, 
 }
 ```
 
-### 2. Button Press
+### 2. 버튼 누르기
 
 ```css
 .button {
@@ -57,7 +57,7 @@ This skill provides comprehensive guidance for implementing smooth, performant, 
 }
 ```
 
-### 3. Fade In on Mount (Framer Motion)
+### 3. 마운트 시 페이드인 (Framer Motion)
 
 ```tsx
 <motion.div
@@ -69,7 +69,7 @@ This skill provides comprehensive guidance for implementing smooth, performant, 
 </motion.div>
 ```
 
-### 4. Modal with Exit Animation
+### 4. 퇴장 애니메이션이 있는 모달
 
 ```tsx
 <AnimatePresence>
@@ -86,7 +86,7 @@ This skill provides comprehensive guidance for implementing smooth, performant, 
 </AnimatePresence>
 ```
 
-### 5. Tab Indicator (Shared Layout)
+### 5. 탭 인디케이터 (공유 레이아웃)
 
 ```tsx
 {tabs.map(tab => (
@@ -103,7 +103,7 @@ This skill provides comprehensive guidance for implementing smooth, performant, 
 ))}
 ```
 
-### 6. Staggered List Animation
+### 6. 스태거 리스트 애니메이션
 
 ```tsx
 const container = {
@@ -124,56 +124,56 @@ const item = {
 </motion.ul>
 ```
 
-## Golden Rules
+## 황금 규칙
 
-1. **Exits faster than enters**: Exit animations should be ~75% of enter duration
-2. **Only animate transform and opacity**: These are GPU-accelerated
-3. **200-300ms is the sweet spot**: Most animations should be in this range
-4. **Always respect prefers-reduced-motion**: See accessibility section in references
-5. **Use springs for interruptible animations**: Better UX when users interrupt
+1. **퇴장이 등장보다 빠르게**: 퇴장 애니메이션은 등장의 약 75% 길이로
+2. **transform과 opacity만 애니메이트**: GPU 가속 대상이기 때문
+3. **200-300ms가 최적**: 대부분의 애니메이션은 이 범위 안에
+4. **prefers-reduced-motion 항상 준수**: 참고 자료의 접근성 섹션 참고
+5. **중단 가능한 애니메이션엔 spring 사용**: 사용자가 도중에 중단할 때 더 나은 UX
 
-## Examples
+## 예시
 
-Complete working examples from the course are in the `examples/` directory:
+코스에서 제공하는 완성된 예시들이 `examples/` 디렉터리에 있다:
 
-| Example | Description | Key Techniques |
+| 예시 | 설명 | 핵심 기법 |
 |---------|-------------|----------------|
-| `card-hover.tsx` | Slide-up description on hover | CSS transitions, transform, opacity |
-| `toast-stacking.tsx` | Animated toast notifications | CSS custom properties, data-* triggers |
-| `text-reveal.tsx` | Staggered letter animation | @keyframes, animation-delay, calc() |
-| `shared-layout.tsx` | Element position/size morph | Framer Motion layoutId |
-| `animate-height.tsx` | Smooth height changes | useMeasure, animate height |
-| `multi-step-flow.tsx` | Directional step wizard | AnimatePresence, custom variants |
-| `feedback-popover.tsx` | Button-to-popover expansion | Nested layoutId, form states |
-| `app-store-card.tsx` | iOS-style card expansion | Multiple layoutId elements |
+| `card-hover.tsx` | 호버 시 설명 슬라이드업 | CSS transitions, transform, opacity |
+| `toast-stacking.tsx` | 토스트 알림 애니메이션 | CSS custom properties, data-* triggers |
+| `text-reveal.tsx` | 글자 스태거 등장 | @keyframes, animation-delay, calc() |
+| `shared-layout.tsx` | 요소 위치·크기 모프 | Framer Motion layoutId |
+| `animate-height.tsx` | 높이 부드럽게 변경 | useMeasure, animate height |
+| `multi-step-flow.tsx` | 방향성 있는 단계 마법사 | AnimatePresence, custom variants |
+| `feedback-popover.tsx` | 버튼→팝오버 확장 | Nested layoutId, form states |
+| `app-store-card.tsx` | iOS 스타일 카드 확장 | Multiple layoutId elements |
 
-To use an example, read it with: `Read examples/<name>.tsx`
+예시를 사용하려면: `Read examples/<이름>.tsx`
 
-## References
+## 참고 자료
 
-For detailed documentation, read the reference files:
+상세 문서는 아래 파일 참고:
 
-- `references/easing-and-timing.md` - Easing functions, timing guidelines, spring configuration
+- `references/easing-and-timing.md` - 이징 함수, 타이밍 가이드라인, spring 설정
 - `references/css-animations.md` - Transforms, transitions, keyframes, clip-path
-- `references/framer-motion.md` - Motion components, AnimatePresence, variants, layout animations, hooks
-- `references/performance-accessibility.md` - 60fps optimization, prefers-reduced-motion, accessibility
+- `references/framer-motion.md` - Motion 컴포넌트, AnimatePresence, variants, 레이아웃 애니메이션, hooks
+- `references/performance-accessibility.md` - 60fps 최적화, prefers-reduced-motion, 접근성
 
-## When to Use What
+## 상황별 선택 가이드
 
-| Scenario | Recommended Approach |
+| 상황 | 권장 방식 |
 |----------|---------------------|
-| Simple hover effects | CSS transitions |
-| Enter/exit animations | Framer Motion + AnimatePresence |
-| Layout changes | Framer Motion `layout` prop |
-| Shared element transitions | Framer Motion `layoutId` |
-| Scroll-linked animations | Framer Motion `useScroll` |
-| Complex orchestrated animations | Framer Motion variants |
-| Drag interactions | Framer Motion drag gestures |
-| Performance-critical | CSS-only with transforms |
+| 단순 호버 효과 | CSS transitions |
+| 등장·퇴장 애니메이션 | Framer Motion + AnimatePresence |
+| 레이아웃 변경 | Framer Motion `layout` prop |
+| 공유 요소 트랜지션 | Framer Motion `layoutId` |
+| 스크롤 연동 애니메이션 | Framer Motion `useScroll` |
+| 복잡한 오케스트레이션 | Framer Motion variants |
+| 드래그 인터랙션 | Framer Motion drag gestures |
+| 성능 최우선 | CSS only + transforms |
 
-## Dependencies
+## 의존성
 
-For Framer Motion examples, install:
+Framer Motion 예시를 사용하려면:
 ```bash
 pnpm add framer-motion react-use-measure usehooks-ts
 ```
