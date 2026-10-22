@@ -32,12 +32,14 @@ claude-config/
 │
 ├── skills/                   ← 전역 스킬 (어느 프로젝트에서나 호출 가능)
 │   ├── animate/              ← Framer Motion / CSS 애니메이션 패턴
-│   ├── design-taste-frontend/← 랜딩·포트폴리오 Anti-slop 디자인
+│   ├── clarify-intent/       ← 구현 전 의도 확정 및 GitHub 이슈 생성
 │   ├── find-skills/          ← npx skills CLI로 스킬 탐색
-│   ├── frontend-design/      ← 차별화된 UI 디자인 가이드
+│   ├── frontend-design/      ← 차별화된 UI 디자인 가이드 (Anti-slop 포함)
 │   ├── harness/              ← 에이전트 팀 설계 (복잡한 다단계 작업)
 │   ├── harness-evolve/       ← 하네스 피드백 반영·진화
-│   └── senior-frontend/      ← React/Next.js 컴포넌트·번들 분석
+│   ├── pr-workflow/          ← 브랜치 전략·PR·릴리즈 전체 워크플로우
+│   ├── senior-frontend/      ← React/Next.js 컴포넌트·번들 분석
+│   └── verify-solution/      ← Testing Trophy 기반 해법 검증
 │
 ├── hooks/
 │   ├── guard-main-push.sh    ← main 브랜치 직접 push 차단 (PreToolUse)
@@ -55,12 +57,14 @@ claude-config/
 | 스킬 | 호출 시점 |
 |---|---|
 | `animate` | 애니메이션·트랜지션 구현 |
-| `design-taste-frontend` | 랜딩 페이지·포트폴리오 디자인 |
+| `clarify-intent` | 수정·기능 추가·버그 요청 → 구현 전 의도 확정 및 이슈 생성 |
 | `find-skills` | "이런 스킬 있어?" 탐색 |
-| `frontend-design` | UI 시각 방향성 설계 |
+| `frontend-design` | UI 시각 방향성 설계 (랜딩·포트폴리오 Anti-slop 포함) |
 | `harness` | 에이전트 팀이 필요한 복잡한 다단계 작업 |
 | `harness-evolve` | 기존 하네스 피드백 반영 |
+| `pr-workflow` | 브랜치 생성 → 커밋 → PR → CI → 릴리즈 전체 흐름 |
 | `senior-frontend` | React/Next.js 컴포넌트 생성·번들 분석 |
+| `verify-solution` | 구현 완료 후 Testing Trophy로 해법 검증 |
 
 ---
 
@@ -94,5 +98,4 @@ git push
 
 ## 나중에 추가할 것
 
-- `templates/` — 프로젝트 유형별 스킬·CLAUDE.md 템플릿 (react-web, expo-mobile, astro-blog)
 - `agents/` — 범용 에이전트 (code-reviewer, researcher 등)
