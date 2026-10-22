@@ -28,6 +28,17 @@
         ]
       }
     ],
+    "PostToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/sync-skill-to-repo.sh"
+          }
+        ]
+      }
+    ],
     "Stop": [
       {
         "hooks": [
