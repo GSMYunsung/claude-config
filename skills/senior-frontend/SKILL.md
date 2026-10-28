@@ -1,209 +1,209 @@
 ---
 name: senior-frontend
-description: React, Next.js, TypeScript, Tailwind CSS를 사용하는 현대적이고 성능 좋은 웹 애플리케이션 개발을 위한 시니어 프론트엔드 스킬. 컴포넌트 스캐폴딩, 성능 최적화, 번들 분석, UI 모범 사례를 포함한다. 프론트엔드 기능 개발, 성능 최적화, UI/UX 구현, 상태 관리, 코드 리뷰 시 사용한다.
+description: Comprehensive frontend development skill for building modern, performant web applications using ReactJS, NextJS, TypeScript, Tailwind CSS. Includes component scaffolding, performance optimization, bundle analysis, and UI best practices. Use when developing frontend features, optimizing performance, implementing UI/UX designs, managing state, or reviewing frontend code.
 ---
 
 # Senior Frontend
 
-현대적인 도구와 모범 사례를 갖춘 시니어 프론트엔드 완전 도구 모음.
+Complete toolkit for senior frontend with modern tools and best practices.
 
-## 빠른 시작
+## Quick Start
 
-### 주요 기능
+### Main Capabilities
 
-이 스킬은 자동화 스크립트를 통해 세 가지 핵심 기능을 제공한다:
+This skill provides three core capabilities through automated scripts:
 
 ```bash
-# 스크립트 1: 컴포넌트 생성기
+# Script 1: Component Generator
 python scripts/component_generator.py [options]
 
-# 스크립트 2: 번들 분석기
+# Script 2: Bundle Analyzer
 python scripts/bundle_analyzer.py [options]
 
-# 스크립트 3: 프론트엔드 스캐폴더
+# Script 3: Frontend Scaffolder
 python scripts/frontend_scaffolder.py [options]
 ```
 
-## 핵심 기능
+## Core Capabilities
 
-### 1. 컴포넌트 생성기
+### 1. Component Generator
 
-컴포넌트 생성 작업을 위한 자동화 도구.
+Automated tool for component generator tasks.
 
-**특징:**
-- 자동 스캐폴딩
-- 모범 사례 내장
-- 설정 가능한 템플릿
-- 품질 검사
+**Features:**
+- Automated scaffolding
+- Best practices built-in
+- Configurable templates
+- Quality checks
 
-**사용법:**
+**Usage:**
 ```bash
 python scripts/component_generator.py <project-path> [options]
 ```
 
-### 2. 번들 분석기
+### 2. Bundle Analyzer
 
-종합적인 분석 및 최적화 도구.
+Comprehensive analysis and optimization tool.
 
-**특징:**
-- 심층 분석
-- 성능 지표
-- 개선 권장사항
-- 자동 수정
+**Features:**
+- Deep analysis
+- Performance metrics
+- Recommendations
+- Automated fixes
 
-**사용법:**
+**Usage:**
 ```bash
 python scripts/bundle_analyzer.py <target-path> [--verbose]
 ```
 
-### 3. 프론트엔드 스캐폴더
+### 3. Frontend Scaffolder
 
-특수 작업을 위한 고급 도구.
+Advanced tooling for specialized tasks.
 
-**특징:**
-- 전문가 수준 자동화
-- 커스텀 설정
-- 통합 준비 완료
-- 프로덕션 수준 출력
+**Features:**
+- Expert-level automation
+- Custom configurations
+- Integration ready
+- Production-grade output
 
-**사용법:**
+**Usage:**
 ```bash
 python scripts/frontend_scaffolder.py [arguments] [options]
 ```
 
-## 참조 문서
+## Reference Documentation
 
-### React 패턴
+### React Patterns
 
-`references/react_patterns.md`의 종합 가이드:
+Comprehensive guide available in `references/react_patterns.md`:
 
-- 상세 패턴 및 사례
-- 코드 예제
-- 모범 사례
-- 피해야 할 안티패턴
-- 실제 사용 시나리오
+- Detailed patterns and practices
+- Code examples
+- Best practices
+- Anti-patterns to avoid
+- Real-world scenarios
 
-### Next.js 최적화 가이드
+### Nextjs Optimization Guide
 
-`references/nextjs_optimization_guide.md`의 전체 워크플로우 문서:
+Complete workflow documentation in `references/nextjs_optimization_guide.md`:
 
-- 단계별 프로세스
-- 최적화 전략
-- 도구 통합
-- 성능 튜닝
-- 트러블슈팅 가이드
+- Step-by-step processes
+- Optimization strategies
+- Tool integrations
+- Performance tuning
+- Troubleshooting guide
 
-### 프론트엔드 모범 사례
+### Frontend Best Practices
 
-`references/frontend_best_practices.md`의 기술 참조 가이드:
+Technical reference guide in `references/frontend_best_practices.md`:
 
-- 기술 스택 상세
-- 설정 예제
-- 통합 패턴
-- 보안 고려사항
-- 확장성 가이드라인
+- Technology stack details
+- Configuration examples
+- Integration patterns
+- Security considerations
+- Scalability guidelines
 
-## 기술 스택
+## Tech Stack
 
-**언어:** TypeScript, JavaScript, Python, Go, Swift, Kotlin
-**프론트엔드:** React, Next.js, React Native, Flutter
-**백엔드:** Node.js, Express, GraphQL, REST APIs
-**데이터베이스:** PostgreSQL, Prisma, NeonDB, Supabase
+**Languages:** TypeScript, JavaScript, Python, Go, Swift, Kotlin
+**Frontend:** React, Next.js, React Native, Flutter
+**Backend:** Node.js, Express, GraphQL, REST APIs
+**Database:** PostgreSQL, Prisma, NeonDB, Supabase
 **DevOps:** Docker, Kubernetes, Terraform, GitHub Actions, CircleCI
-**클라우드:** AWS, GCP, Azure
+**Cloud:** AWS, GCP, Azure
 
-## 개발 워크플로우
+## Development Workflow
 
-### 1. 설정 및 구성
+### 1. Setup and Configuration
 
 ```bash
-# 의존성 설치
+# Install dependencies
 npm install
-# 또는
+# or
 pip install -r requirements.txt
 
-# 환경 설정
+# Configure environment
 cp .env.example .env
 ```
 
-### 2. 품질 검사 실행
+### 2. Run Quality Checks
 
 ```bash
-# 분석기 스크립트 사용
+# Use the analyzer script
 python scripts/bundle_analyzer.py .
 
-# 권장사항 확인
-# 수정 적용
+# Review recommendations
+# Apply fixes
 ```
 
-### 3. 모범 사례 적용
+### 3. Implement Best Practices
 
-아래 문서의 패턴과 사례를 따른다:
+Follow the patterns and practices documented in:
 - `references/react_patterns.md`
 - `references/nextjs_optimization_guide.md`
 - `references/frontend_best_practices.md`
 
-## 모범 사례 요약
+## Best Practices Summary
 
-### 코드 품질
-- 확립된 패턴 따르기
-- 포괄적인 테스트 작성
-- 결정 사항 문서화
-- 정기적인 리뷰
+### Code Quality
+- Follow established patterns
+- Write comprehensive tests
+- Document decisions
+- Review regularly
 
-### 성능
-- 최적화 전에 측정
-- 적절한 캐싱 사용
-- 핵심 경로 최적화
-- 프로덕션 모니터링
+### Performance
+- Measure before optimizing
+- Use appropriate caching
+- Optimize critical paths
+- Monitor in production
 
-### 보안
-- 모든 입력값 검증
-- 파라미터화된 쿼리 사용
-- 올바른 인증 구현
-- 의존성 최신 유지
+### Security
+- Validate all inputs
+- Use parameterized queries
+- Implement proper authentication
+- Keep dependencies updated
 
-### 유지보수성
-- 명확한 코드 작성
-- 일관된 네이밍 사용
-- 유용한 주석 추가
-- 단순하게 유지
+### Maintainability
+- Write clear code
+- Use consistent naming
+- Add helpful comments
+- Keep it simple
 
-## 주요 명령어
+## Common Commands
 
 ```bash
-# 개발
+# Development
 npm run dev
 npm run build
 npm run test
 npm run lint
 
-# 분석
+# Analysis
 python scripts/bundle_analyzer.py .
 python scripts/frontend_scaffolder.py --analyze
 
-# 배포
+# Deployment
 docker build -t app:latest .
 docker-compose up -d
 kubectl apply -f k8s/
 ```
 
-## 트러블슈팅
+## Troubleshooting
 
-### 자주 발생하는 문제
+### Common Issues
 
-`references/frontend_best_practices.md`의 종합 트러블슈팅 섹션을 참고한다.
+Check the comprehensive troubleshooting section in `references/frontend_best_practices.md`.
 
-### 도움말
+### Getting Help
 
-- 참조 문서 확인
-- 스크립트 출력 메시지 확인
-- 기술 스택 문서 참고
-- 에러 로그 확인
+- Review reference documentation
+- Check script output messages
+- Consult tech stack documentation
+- Review error logs
 
-## 리소스
+## Resources
 
-- 패턴 참조: `references/react_patterns.md`
-- 워크플로우 가이드: `references/nextjs_optimization_guide.md`
-- 기술 가이드: `references/frontend_best_practices.md`
-- 도구 스크립트: `scripts/` 디렉터리
+- Pattern Reference: `references/react_patterns.md`
+- Workflow Guide: `references/nextjs_optimization_guide.md`
+- Technical Guide: `references/frontend_best_practices.md`
+- Tool Scripts: `scripts/` directory

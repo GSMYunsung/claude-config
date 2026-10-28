@@ -6,7 +6,7 @@ description: Astro v6 + Tailwind v4 포트폴리오+블로그(yuncastlee)에 최
 # design-flow
 
 **프로젝트:** Astro v6 + Tailwind v4 · `/프로젝트/portfolio-blog` · yuncastlee  
-**흐름:** 트렌드 선별 → 브리프 → Figma MCP 구현 → 코드 구현
+**흐름:** 아키타입 그라운딩 → DNA 발산·수렴 → 브리프 → Figma MCP 구현 → 코드 구현
 
 ---
 
@@ -51,37 +51,59 @@ Figma MCP는 모든 플랜에서 무료로 연결 가능하다.
 
 ---
 
-## Phase 1: 트렌드 수집 & 컨텍스트 선별
+## Phase 1: 아키타입 그라운딩 & DNA 발산
 
-목적: 이 포트폴리오에 실제로 적합한 2026 디자인 개념 3~5개를 고른다.
+목적: 통계 평균에서 벗어난 의도적 디자인 방향을 3개 후보로 발산한다.
 
-### 1-A. 트렌드 소스
+### 1-A. 레퍼런스 읽기
 
-`references/trend-concepts.md`를 읽어 사전 정리된 트렌드와 Astro 호환성 평가를 불러온다.
+다음 파일을 모두 읽는다:
 
-각 Claude 디자인 스킬에서 참조할 핵심 개념:
+1. `references/design-dna.md` — DNA 파이프라인, 12 아키타입, 8 Aesthetic Family, AI Tells
+2. `references/trend-concepts.md` — 2026 트렌드와 Astro 호환성 평가
+3. `references/impeccable-style.md` — 4가지 제품 모드, slop 규칙, okLCH
 
-| 스킬 | 참조할 개념 |
-|------|------------|
-| `design-taste-frontend` | Section 0 BRIEF INFERENCE → 다이얼(VARIANCE/MOTION/DENSITY) 설정법 |
-| `frontend-design` | 토큰 시스템(color/type/layout/signature) 브레인스토밍 방식, 자기 비판 원칙 |
-| `animate` | easing 치트시트, scroll-driven 패턴, GPU 가속 규칙 |
+### 1-B. 아키타입 도출
 
-### 1-B. 선별 기준
+브리프(목적·대상·성격 3단어)에서 아키타입을 도출한다. 사용자에게 묻지 않는다.
 
-다음 조건을 모두 충족하는 개념만 선택한다:
-- **Astro Islands 호환**: 불필요한 client-side hydration 없이 구현 가능
-- **Tailwind v4 CSS-first 구현 가능**: CSS variables + `@theme` 블록으로 표현 가능
-- **Core Web Vitals 안전**: CLS, LCP에 영향 없음
-- **포트폴리오 캐릭터**: 개발자 포트폴리오+블로그 (recruiter + fellow developer 대상)
+> 도출된 아키타입: **[이름]** — [한 줄 근거]  
+> 호환 패밀리: [1순위], [2순위]
 
-### 1-C. 선별 결과 보고
+### 1-C. DNA 발산 — 3개 후보
+
+후보마다 **다른 레퍼런스 쌍**을 그라운딩에 사용한다. 색조 패밀리도 겹치지 않아야 한다.
 
 ```
-| # | 개념명 | 출처 스킬 | Astro 구현 방법 | 채택 이유 |
+후보 A:
+  그라운딩: [레퍼런스1의 속성] + [레퍼런스2의 속성]
+  패밀리: [Aesthetic Family명]
+  4축:
+    Type voice:   [구체적 포지션]
+    Color:        [시드 색조, 채도, 배경]
+    Composition:  [그리드, 반경, 테두리]
+    Motion:       [타이밍, 이징, 허용 움직임]
+  시그니처 무브: [단 하나의 고유한 결정]
+
+후보 B: (동일 형식)
+후보 C: (동일 형식)
 ```
 
-사용자 승인 후 Phase 2 진행.
+### 1-D. DNA 비판
+
+선택 전에 3개 후보를 기준 기반으로 비판한다:
+- **독특함**: 훈련 데이터 클러스터와 얼마나 다른가?
+- **레지스터 적합성**: 포트폴리오 목적·대상에 맞는가?
+- **Tell 스캔**: `references/design-dna.md`의 AI Tells 체크리스트 통과하는가?
+- **Astro 구현 가능성**: Islands 없이 CSS-first로 구현 가능한가?
+
+### 1-E. 발산 결과 보고
+
+```
+| 후보 | 그라운딩 | 패밀리 | 강점 | 위험 |
+```
+
+사용자 승인(또는 합성 지시) 후 Phase 2 진행.
 
 ---
 
@@ -89,42 +111,87 @@ Figma MCP는 모든 플랜에서 무료로 연결 가능하다.
 
 목적: 선별된 개념을 구체적인 토큰 시스템과 레이아웃 방향으로 정의한다.
 
-### 2-A. 디자인 읽기 선언 (design-taste-frontend Section 0.B 형식)
+### 2-A. 제품 모드 선언 (impeccable.style)
+
+`references/impeccable-style.md`의 4가지 모드 중 이 페이지에 해당하는 것을 선언한다.
+
+> 모드: **[Persuade / Read / Experience]** — [이유 한 줄]
+
+- 홈, 프로젝트 소개 → **Persuade** (전환 흐름 우선, 하나의 CTA)
+- 블로그 포스트 → **Read** (가독성 우선, 긴 줄 금지)
+- About, 포트폴리오 메인 → **Experience** (몰입 우선, 시그니처 요소)
+
+### 2-B. 디자인 읽기 선언 (design-taste-frontend Section 0.B 형식)
 
 > "Reading this as: [페이지 종류] for [대상], with a [분위기] language, leaning toward [방향]."
 
-### 2-B. 다이얼 설정
+### 2-C. 다이얼 설정
 
 포트폴리오(Developer) 기본값: `VARIANCE: 6 / MOTION: 5 / DENSITY: 4`  
 조정이 필요하면 이유를 한 줄로 남긴다.
 
-**Anti-default 체크** (`design-taste-frontend` Section 0.D):
-- AI 보라색 그라디언트 → 교체
-- Inter + slate-900 기본 조합 → 교체
-- 3개 equal feature cards → 교체
-- Centered hero over dark mesh → 교체
+**Anti-slop 체크** (`impeccable.style` + `references/design-dna.md` AI Tells 통합):
 
-### 2-C. 토큰 시스템 정의
+즉시 제거 (impeccable.style):
+- AI beige/크림 팔레트, AI 보라색 그라디언트
+- 이탤릭 세리프 디스플레이 제목
+- 그래디언트 텍스트 (보라→핑크 등)
+- 3개 equal feature cards
+- 영웅 메트릭 레이아웃 (큰 숫자 3개 나열)
+- pulsing dot, bounce 이징, 자동 스크롤 마퀴
+- 래디얼 그래디언트 후광 배경
+- "Passionate developer" 같은 빈 마케팅 카피
 
+추가 금지 (design-for-ai AI Tells 2026-07):
+- Inter/Roboto 기본 폰트 미결정 상태
+- `#6366F1` / `#8B5CF6` / `#A855F7` 인디고-바이올렛 강조색
+- Space Grotesk 기본 폰트 ("노력한 척" 2026 금지)
+- 모든 것을 카드로 처리
+- Tailwind/shadcn 기본값 `--radius` / 간격 스케일 미수정
+- 0.08–0.12 불투명도 그림자 3개 이상 균일 적용
+- 모든 텍스트 가운데 정렬
+
+### 2-D. DNA 확정 & 토큰 시스템 정의
+
+Phase 1에서 선택된 후보를 기반으로 4개 축을 확정하고 토큰으로 변환한다.
+
+**DNA 선언 (design-dna.md 형식)**
+```
+그라운딩: [레퍼런스A의 속성] + [레퍼런스B의 속성]
+아키타입: [이름]
+패밀리:   [Aesthetic Family명]
+
+Type voice:   [디스플레이 폰트 / 바디 폰트 / 스케일 비율 / 리딩]
+Color:        [시드 색조(oklch hue) / 채도 / 배경 방식 / 하모니 / 강조색 수]
+Composition:  [그리드 / 밀도 / 반경 / 테두리·그림자 / 지배 요소]
+Motion:       [타이밍 범위 / 이징 / 허용 움직임 / 시그니처 전환]
+
+지배 축: [어떤 축이 이 디자인의 정체성을 담당하는가]
+```
+
+**토큰 시스템 (oklch 색공간)**
 ```
 ## 컬러 (4–6개)
---color-bg:      #...  배경
---color-surface: #...  카드/패널
---color-text:    #...  본문
---color-accent:  #...  강조
---color-muted:   #...  보조 텍스트
+--color-bg:      oklch(...)  배경
+--color-surface: oklch(...)  카드/패널
+--color-text:    oklch(...)  본문
+--color-accent:  oklch(...)  강조
+--color-muted:   oklch(...)  보조 텍스트
 
-## 타이포그래피
+## 타이포그래피 (Type voice 축 구현)
 Display: [서체] — [사용처 + 선택 이유]
 Body:    [서체] — [사용처 + 선택 이유]
 Mono:    [서체] — [코드 블록/라벨]
 
-## 레이아웃
+## 레이아웃 (Composition 축 구현)
 최대 너비: [px] / 그리드: [컬럼 × 간격]
 ASCII 와이어프레임 (핵심 섹션 1–2개)
 
-## 시그니처 요소
-[이 디자인을 기억하게 만드는 단 하나의 요소 + 이유]
+## 시그니처 무브 (design-dna.md: 하나의 고유한 결정)
+[템플릿이 절대 만들어내지 못할 단 하나의 결정 + 이유]
+
+## 하나의 승자 (impeccable.style)
+[이 페이지에서 시선의 1순위를 차지하는 단 하나의 요소]
 ```
 
 ### 2-D. 브리프 저장
