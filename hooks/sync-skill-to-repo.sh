@@ -34,10 +34,10 @@ case "$file_path" in
         skill_name=$(echo "$file_path" | rev | cut -d'/' -f2 | rev)
         project_skill_dir=$(echo "$file_path" | sed "s|/SKILL.md$||")
 
-        # 전역에 복사
+        # 전역에 복사 (심링크 포함 실제 파일로)
         source_dir="$GLOBAL_SKILLS/$skill_name"
         rm -rf "$source_dir"
-        cp -R "$project_skill_dir" "$source_dir"
+        cp -RL "$project_skill_dir" "$source_dir"
         printf '[sync] 프로젝트 스킬 "%s" 전역으로 승격\n' "$skill_name" >&2
 
         # ── 유사 스킬 탐지 ──────────────────────────────────
@@ -97,7 +97,7 @@ esac
 
 # ── claude-config 동기화 ─────────────────────────────────────
 rm -rf "$REPO/skills/$skill_name"
-cp -R "$source_dir" "$REPO/skills/$skill_name"
+cp -RL "$source_dir" "$REPO/skills/$skill_name"
 
 cd "$REPO"
 git add "skills/$skill_name"
