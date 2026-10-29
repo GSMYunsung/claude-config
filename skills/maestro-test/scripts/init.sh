@@ -2,7 +2,7 @@
 # Sets up maestro-test in the current project. Never overwrites existing files.
 #   init.sh
 # Creates .maestro/config.sh (bundle ID and scheme read from app.json when present),
-# .maestro/subflows/dismiss-overlays.yaml, .maestro/flows/00-setup.yaml, .maestro/TESTING.md,
+# .maestro/subflows/{dismiss-overlays,tap-tab,tap-until}.yaml, .maestro/flows/00-setup.yaml, .maestro/TESTING.md,
 # and ignores maestro-report/ in git.
 set -euo pipefail
 SKILL_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -29,6 +29,8 @@ place() {  # place <template> <dest>
 }
 place config.sh .maestro/config.sh
 place dismiss-overlays.yaml .maestro/subflows/dismiss-overlays.yaml
+place tap-tab.yaml .maestro/subflows/tap-tab.yaml
+place tap-until.yaml .maestro/subflows/tap-until.yaml
 place TESTING.md .maestro/TESTING.md
 [ -n "$(ls .maestro/flows/*.yaml 2>/dev/null)" ] && echo "keep    .maestro/flows/" || place 00-setup.yaml .maestro/flows/00-setup.yaml
 if ! grep -qxF 'maestro-report/' .gitignore 2>/dev/null; then echo 'maestro-report/' >> .gitignore; echo "update  .gitignore"; fi

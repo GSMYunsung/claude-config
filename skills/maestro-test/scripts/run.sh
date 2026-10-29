@@ -12,10 +12,16 @@ main() {
   cd "$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
   [ -f .maestro/config.sh ] || { echo "no .maestro/config.sh — run $SKILL_DIR/scripts/init.sh first" >&2; exit 1; }
   APP_ID=""; REPORT_TITLE="화면 테스트"; SIM_MODEL="iPhone 17 Pro"; EXPO_SCHEME=""; METRO_PORT=8081
-  LOCATION=""; GRANT=()
+  LOCATION=""; GRANT=(); REDUCE_MOTION=1; LINT=strict
   # shellcheck disable=SC1091
   source .maestro/config.sh
   [ -n "$APP_ID" ] || { echo "APP_ID is empty in .maestro/config.sh" >&2; exit 1; }
+
+  # Patterns that failed before (timing, tool defaults, undeclared state) are caught here in a second
+  # instead of after a 10-minute run. LINT=warn only prints them.
+  if ! python3 "$SKILL_DIR/scripts/lint-flows.py" .maestro; then
+    [ "${LINT}" = warn ] || { echo "fix the findings above, or run with LINT=warn" >&2; exit 1; }
+  fi
 
   export PATH="/opt/homebrew/opt/openjdk@17/bin:$HOME/.maestro/bin:$PATH"
   command -v maestro >/dev/null || { echo "maestro not installed (brew install openjdk@17 mobile-dev-inc/tap/maestro)" >&2; exit 1; }
@@ -23,6 +29,17 @@ main() {
   SIM="${SIM:-$(xcrun simctl list devices booted | awk -F'[()]' '/iPhone/ {print $2; exit}')}"
   [ -z "$SIM" ] && SIM="$(xcrun simctl list devices available | awk -F'[()]' -v m="$SIM_MODEL (" 'index($0, m) {print $2; exit}')"
   [ -z "$SIM" ] && { echo "no iPhone simulator (SIM_MODEL=$SIM_MODEL)" >&2; exit 1; }
+  # One run per simulator: two runs (or another session's) on the same device break each other.
+  LOCK="${TMPDIR:-/tmp}/maestro-test-$SIM.lock"
+  if ! mkdir "$LOCK" 2>/dev/null; then
+    local holder; holder="$(cat "$LOCK/pid" 2>/dev/null)"
+    if [ -n "$holder" ] && kill -0 "$holder" 2>/dev/null; then
+      echo "another run (pid $holder) is using simulator $SIM — wait for it or stop it" >&2; exit 1
+    fi
+    rm -rf "$LOCK"; mkdir "$LOCK"
+  fi
+  echo $$ > "$LOCK/pid"
+  trap 'rm -rf "$LOCK"' EXIT
   xcrun simctl boot "$SIM" 2>/dev/null; open -a Simulator
   xcrun simctl get_app_container "$SIM" "$APP_ID" >/dev/null 2>&1 || {
     echo "$APP_ID is not installed on simulator $SIM — build it once (Expo: npx expo run:ios --device $SIM --no-bundler)" >&2; exit 1; }
@@ -36,6 +53,9 @@ main() {
     ENVS+=(--env DEV_URL="exp+$EXPO_SCHEME://?__expo_url=$url&__expo_disable_fab=1&__expo_disable_onboarding=1&__expo_disable_auto_launch=1")
   fi
 
+  # Reduce Motion stops looping animations in apps that honor it. A screen that never settles makes
+  # every tap wait ~7s and hides ignored taps, because Maestro sees the animation as "the screen changed".
+  xcrun simctl spawn "$SIM" defaults write com.apple.Accessibility ReduceMotionEnabled -bool "$([ "$REDUCE_MOTION" = 1 ] && echo true || echo false)"
   [ -n "$LOCATION" ] && xcrun simctl location "$SIM" set "$LOCATION"
   for service in "${GRANT[@]}"; do xcrun simctl privacy "$SIM" grant "$service" "$APP_ID" 2>/dev/null || true; done
 

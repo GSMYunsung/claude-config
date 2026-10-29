@@ -1,9 +1,14 @@
 # 준비: 앱 데이터를 지우고 실행해 첫 화면까지 연다. 이후 시나리오는 번호 순서대로 이 상태를 이어받는다.
+# 전제: 없음(앱 데이터를 지운다)
+# 남김: 첫 화면, 앱 데이터 없음(시나리오가 쓸 데이터는 각 시나리오가 직접 만든다)
 appId: ${APP_ID}
 name: "0 준비"
 ---
 - launchApp:
     clearState: true
+    # 권한은 명시한다(기본값은 "모두 허용"). 권한 창 자체를 시험할 땐 해당 권한을 unset.
+    permissions:
+      all: allow
 # Expo 개발 빌드면 아래 두 단계를 남긴다(run.sh가 DEV_URL을 넘긴다). 아니면 지운다.
 - openLink: ${DEV_URL}
 - extendedWaitUntil:

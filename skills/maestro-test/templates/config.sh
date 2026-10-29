@@ -17,3 +17,11 @@ LOCATION=""
 # simctl privacy services granted before the run, e.g. (location-always photos).
 # Per-scenario permissions belong in the flow instead: launchApp → permissions: { location: unset }
 GRANT=()
+
+# Turn on the simulator's Reduce Motion so looping animations stop and the screen settles between taps
+# (the app should honor AccessibilityInfo.isReduceMotionEnabled). 0 to test with full motion.
+REDUCE_MOTION=1
+
+# Static check of flows before each run (scripts/lint-flows.py): strict stops the run on findings,
+# warn only prints them. Keep strict; use warn only while converting existing flows.
+LINT=strict
