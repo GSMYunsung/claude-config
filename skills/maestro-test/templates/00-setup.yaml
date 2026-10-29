@@ -1,0 +1,16 @@
+# 준비: 앱 데이터를 지우고 실행해 첫 화면까지 연다. 이후 시나리오는 번호 순서대로 이 상태를 이어받는다.
+appId: ${APP_ID}
+name: "0 준비"
+---
+- launchApp:
+    clearState: true
+# Expo 개발 빌드면 아래 두 단계를 남긴다(run.sh가 DEV_URL을 넘긴다). 아니면 지운다.
+- openLink: ${DEV_URL}
+- extendedWaitUntil:
+    notVisible: "(?s)(Bundling|Downloading).*"
+    timeout: 120000
+- runFlow:
+    file: ../subflows/dismiss-overlays.yaml
+    env:
+      TARGET: "(?s).*__FIRST_SCREEN_TEXT__.*"
+- takeScreenshot: 00-first-screen

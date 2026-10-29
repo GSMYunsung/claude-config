@@ -1,0 +1,112 @@
+---
+name: maestro-test
+description: 모바일 앱(Expo/React Native 포함)의 주요 화면 흐름을 iOS 시뮬레이터에서 Maestro로 자동 실행하고, 실시간 현황 창과 스크린샷이 담긴 보고서 한 페이지를 만든다. 어느 프로젝트에서나 쓰며 프로젝트별 값은 .maestro/config.sh 에 둔다. 스토어/TestFlight 빌드 전에 실행한다. "화면 테스트", "E2E 테스트", "Maestro 돌려줘", "빌드 전 테스트", "회귀 테스트", "시나리오 점검", "Maestro 설정해줘" 요청과, 기능·화면·문구를 바꾼 뒤 시나리오를 갱신할 때 사용한다.
+---
+
+# 화면 테스트 (maestro-test)
+
+목표는 사람이 손대지 않고 주요 흐름이 그대로 동작하는지 확인하고, 결과를 **보고서 한 장**으로 보여 주는 것이다.
+사용자 응답과 진행 보고는 한국어로 한다. 아래에서 `S` = `~/.claude/skills/maestro-test/scripts`.
+
+## 프로젝트 구성
+
+| 파일 | 내용 |
+|---|---|
+| `.maestro/config.sh` | APP_ID, 보고서 제목, 시뮬레이터 모델, Expo 스킴·Metro 포트, 위치, 미리 줄 권한 |
+| `.maestro/flows/NN-*.yaml` | 시나리오. 번호 순서대로 실행되고 앞 시나리오의 앱 상태를 이어받는다 |
+| `.maestro/subflows/dismiss-overlays.yaml` | 화면을 가리는 창 처리(아래) |
+| `.maestro/TESTING.md` | **이 앱만의 지식**: 화면↔시나리오 대응표, 앱 전용 실패 사례. 작업 전에 먼저 읽는다 |
+| `maestro-report/<시각>/` | 실행 결과(git 제외) |
+
+처음 쓰는 프로젝트면 프로젝트 루트에서 `$S/init.sh` → 출력된 TODO(APP_ID, 첫 화면 문구 등)를 채운다. 기존 파일은 덮어쓰지 않는다.
+
+## 준비 (한 번만)
+
+| 항목 | 확인 / 설치 |
+|---|---|
+| Java 17, Maestro | `brew install openjdk@17 mobile-dev-inc/tap/maestro` (run.sh가 PATH를 맞춘다) |
+| 시뮬레이터에 앱 설치 | Expo 개발 빌드: `npx expo run:ios --device <시뮬레이터 UDID> --no-bundler` (네이티브가 바뀌면 다시) |
+| Metro (Expo일 때) | config의 `METRO_PORT`로 띄운다. 시뮬레이터는 `localhost:<포트>`로 붙는다 |
+
+Maestro는 iOS 실기기를 지원하지 않으므로 시뮬레이터에서 돌린다(`SIM=<UDID>`로 지정 가능).
+
+## 실행
+
+```bash
+$S/run.sh          # 전체 → 10분 넘게 걸리면 백그라운드로 실행
+$S/run.sh 07 08    # 일부만(상태 초기화 없음, 디버깅용)
+```
+
+- run.sh가 하는 일: 시뮬레이터 부팅 → 설치·Metro 확인 → 위치·권한 설정 → 시나리오를 하나씩 실행(실패해도 계속) → 시나리오별 로그·스크린샷 저장 → `report.html` 생성.
+- **실시간 현황**: run.sh가 시작하면서 터미널 창을 열어 `watch.sh <이번 실행>`을 띄운다(2초마다 갱신, 읽기 전용, 보고서가 생기면 종료). 끄려면 `WATCH=0`. 다시 보려면 프로젝트 루트에서 `$S/watch.sh`. 처음 한 번은 macOS가 Terminal 제어 권한을 묻는다 → 허용.
+- 실행 중에는 같은 시뮬레이터·Metro로 다른 작업을 하지 않는다. 다른 세션이 쓰고 있는지 먼저 확인한다(`pgrep -fl maestro`).
+- 흐름에서 쓸 수 있는 값: `${APP_ID}`, Expo면 `${DEV_URL}`(개발 빌드를 Metro에 연결하는 링크. 개발 메뉴·FAB·자동 메뉴 열림이 꺼져 있다).
+
+## 결과 보고
+
+1. `report.html`을 Artifact 도구로 **비공개 페이지로 publish**하고 링크를 준다(실행마다 새 경로 → 새 링크, 같은 링크를 원하면 `url`로 갱신).
+2. 채팅에는 통과/실패 개수, 실패한 시나리오와 이유 한 줄씩만 쓴다.
+3. 실패가 있으면 빌드로 넘어가지 않는다. 원인이 앱인지 시나리오인지 먼저 가린다.
+4. 보고서가 안 생겼으면(실행이 중간에 끊김) `REPORT_TITLE="..." python3 $S/report.py maestro-report/<run>`.
+
+## 기능이 바뀌면 시나리오도 바꾼다
+
+화면 문구·버튼·접근성 라벨·화면 순서·새 알림/권한 창·새 화면을 만들거나 바꾸면 **같은 작업 안에서** 시나리오도 고친다. 테스트는 나중에 깨진 것을 발견하는 도구가 아니라 기능과 함께 움직이는 명세다.
+
+1. `.maestro/TESTING.md`의 화면↔시나리오 표에서 영향받는 시나리오를 찾는다.
+2. 바뀐(또는 사라진) 문구를 `grep -rn "<옛 문구>" .maestro/`로 찾아 고친다.
+3. 새 화면·기능이면 시나리오를 추가하거나 기존 시나리오에 단계를 넣고, 표에 행을 추가한다.
+4. 영향받은 시나리오만 먼저 `$S/run.sh NN` (앞 시나리오의 상태가 필요하면 `00`부터 이어서). 빌드 전에는 전체를 돌린다.
+5. 작업 보고에 "고친 시나리오"를 함께 쓴다. 시나리오를 고칠 필요가 없었다면 그 이유를 한 줄로 쓴다.
+
+## 화면을 가리는 창
+
+권한 창, 개발 메뉴, 안내 알림처럼 테스트 대상이 아닌 창이 화면을 덮으면 그 아래 요소는 Maestro에 **보이지 않는다**. 이런 창은 뜨는 시점이 일정하지 않으므로(번들 로딩 뒤, 위치 조회 뒤) 시나리오마다 고정 횟수로 누르지 않는다.
+
+- 앱 실행·재실행 직후나 권한을 요청하는 동작 뒤에 목표 화면을 기다릴 때는 공통 흐름을 거친다. 이 흐름은 TARGET이 보일 때까지 알려진 가림 창을 닫는다.
+  ```yaml
+  - runFlow:
+      file: ../subflows/dismiss-overlays.yaml
+      env:
+        TARGET: "(?s).*첫 화면 문구.*"
+  ```
+- 새 가림 창이 생기면 **공통 흐름에 한 줄을 추가**한다. 라벨은 실패 시점의 `screen-hierarchy/*.json`에서 확인한다(시뮬레이터 언어로 읽힌다: 한국어면 `닫기`, `허용`).
+- 권한 선택 자체가 테스트 대상인 창(위치 "허용 안 함" 등)은 공통 흐름에 넣지 않고 시나리오가 직접 누른다. 공통 흐름의 문구는 정확히 일치할 때만 눌리므로 겹치지 않게 쓴다.
+- `subflows/`는 `flows/` 밖에 있어서 run.sh가 시나리오로 실행하지 않는다.
+
+## 실패했을 때 보는 순서
+
+- `maestro-report/<run>/<시나리오>/log.txt`: 어떤 단계가 FAILED인지
+- 같은 폴더의 `**/screenshots/step-*.png`: 실패 순간 화면 / `**/screen-hierarchy/*.json`: 그 순간 요소 라벨
+- 지금 화면 구조: `maestro --device <UDID> hierarchy`
+
+범용 원인과 해결(앱 전용 사례는 `.maestro/TESTING.md`에 쌓는다):
+
+| 증상 | 원인 | 해결 |
+|---|---|---|
+| 화면에 있는 문구를 못 찾음 | 시스템 권한 창·알림이 위를 덮음(그 아래 요소는 계층에서 사라짐) | 공통 흐름 `dismiss-overlays` |
+| 개발 메뉴(TOOLS, Fast refresh)가 덮음 | Expo dev client가 실행 직후 메뉴를 엶 | run.sh의 DEV_URL(`__expo_disable_auto_launch=1`)로 `openLink`. 그래도 뜨면 공통 흐름이 `닫기\|Close` |
+| 권한 창이 안 뜸(거부 시나리오 실패) | **`launchApp`은 기본으로 모든 권한을 허용**한다 | `launchApp: { clearState: true, permissions: { location: unset } }` (값: allow/deny/unset, location은 always/inuse/never) |
+| 아무것도 못 찾음, 빨간 전체 화면 | 개발 빌드의 LogBox 오류 | 앱의 `console.error` 원인을 고친다 |
+| 아이콘 버튼을 못 찾음 | 라벨 뒤에 아이콘 문자가 붙음 | 정규식 접두 매칭 `"지금 출발.*"`. 라벨이 없으면 앱에 `accessibilityLabel` 추가 |
+| 탭을 못 누름 | 탭 라벨은 `홈, tab, 1 of 4` 형식 | `"홈, tab.*"` |
+| 탭을 눌렀는데 안 바뀜 | 키보드가 탭 바를 가림 | 화면 제목을 누르거나 끌어서 키보드를 닫는다 |
+| 화면 맨 아래 버튼이 안 눌림 | 반쯤 가려짐 | `scrollUntilVisible` + `centerElement: true`, `retryTapIfNoChange` |
+| 입력칸 끝에 써지지 않음 | 커서가 가운데 | `tapOn`에 `point: "95%,50%"` |
+| 뒤로 가기 | `back`은 안드로이드 전용 | `tapOn: { id: "BackButton" }` |
+| 보고서 단계에서 `syntax error` | 실행 중에 스크립트 파일을 고침 | run.sh는 main으로 감싸 안전하다. 그래도 실행 중에는 스크립트를 고치지 않는다 |
+
+## 시나리오를 쓸 때
+
+- 사용자에게 보이는 문구로 찾고, 아이콘만 있는 버튼은 접근성 라벨로 찾는다.
+- 화면마다 `takeScreenshot: NN-설명`을 1~2장 넣는다(보고서에 실린다).
+- 새 파일은 번호 순서에 맞게 넣고, 앞 시나리오가 남긴 상태를 전제로 쓴다. 상태를 새로 시작해야 하면 `launchApp: { clearState: true }`.
+- 시뮬레이터로 확인할 수 없는 것(실제 백그라운드 위치, 푸시 수신, 프로덕션 빌드 차이)은 `.maestro/TESTING.md`에 적고 실기기에서 확인한다.
+
+## 하지 말 것
+
+- 실패를 `optional: true`로 덮어 통과시키기(정말 늦게 뜨는 창만 optional)
+- 가림 창을 시나리오마다 `repeat times: N` + `optional`로 처리하기(공통 흐름을 쓴다)
+- 기능을 바꾸고 시나리오는 그대로 두기
+- 빌드 직전 실행을 건너뛰기
+- 실행 중에 같은 시뮬레이터로 다른 작업 하기, 실행 중에 스크립트 고치기
