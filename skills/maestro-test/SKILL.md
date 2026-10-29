@@ -165,7 +165,7 @@ Maestro는 탭할 때마다 **화면이 멈출 때까지** 기다리고, 탭이 
 | 탭을 못 누름 | 탭 라벨은 `홈, tab, 1 of 4` 형식 | `"홈, tab.*"`를 `tap-tab.yaml`로 |
 | 탭을 눌렀는데(COMPLETED) 다음 단계 요소가 없음 | 전환 중 탭 무시 또는 반복 애니메이션(위 "탭이 무시될 때") | 동작 줄이기 + `tap-tab.yaml` / `tap-until.yaml` |
 | 탭을 눌렀는데 안 바뀜 | 키보드가 탭 바를 가림 | 화면 제목을 누르거나 끌어서 키보드를 닫는다 |
-| 화면 맨 아래 버튼이 안 눌림 | 반쯤 가려짐 | `scrollUntilVisible` + `centerElement: true`, `retryTapIfNoChange` |
+| 화면 맨 아래 버튼이 안 눌림 | 반쯤 가려짐 | `scrollUntilVisible` + `centerElement: true` 뒤 `tap-until` |
 | 입력칸 끝에 써지지 않음 | 커서가 가운데 | `tapOn`에 `point: "95%,50%"` |
 | 뒤로 가기 | `back`은 안드로이드 전용 | `tapOn: { id: "BackButton" }` |
 | 보고서 단계에서 `syntax error` | 실행 중에 스크립트 파일을 고침 | run.sh는 main으로 감싸 안전하다. 그래도 실행 중에는 스크립트를 고치지 않는다 |
