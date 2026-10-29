@@ -99,6 +99,7 @@ $S/run.sh 07 08    # 일부만(상태 초기화 없음, 디버깅용)
 |---|---|---|
 | 화면에 있는 문구를 못 찾음 | 시스템 권한 창·알림이 위를 덮음(그 아래 요소는 계층에서 사라짐) | 공통 흐름 `dismiss-overlays` |
 | 개발 메뉴(TOOLS, Fast refresh)가 덮음 | Expo dev client가 실행 직후 메뉴를 엶 | run.sh의 DEV_URL(`__expo_disable_auto_launch=1`)로 `openLink`. 그래도 뜨면 공통 흐름이 `닫기\|Close` |
+| 버튼을 눌렀는데(COMPLETED) 화면이 안 바뀜, 뒤의 권한 버튼은 WARNED, 다음 시나리오들이 연달아 실패 | 시스템 창을 닫은 직후의 탭이 앱에 전달되지 않음(간헐적) | 위 "다음 화면이 보일 때까지" 반복 패턴. 연쇄 실패는 첫 실패만 고치면 된다 |
 | 권한 창이 안 뜸(거부 시나리오 실패) | **`launchApp`은 기본으로 모든 권한을 허용**한다 | `launchApp: { clearState: true, permissions: { location: unset } }` (값: allow/deny/unset, location은 always/inuse/never) |
 | 아무것도 못 찾음, 빨간 전체 화면 | 개발 빌드의 LogBox 오류 | 앱의 `console.error` 원인을 고친다 |
 | 아이콘 버튼을 못 찾음 | 라벨 뒤에 아이콘 문자가 붙음 | 정규식 접두 매칭 `"지금 출발.*"`. 라벨이 없으면 앱에 `accessibilityLabel` 추가 |
